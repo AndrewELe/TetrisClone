@@ -34,51 +34,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const lShape = [
         [1, width+1, width*2+1, 2],
         [width, width+1, width+2, width*2+2],
-        [1, width+1, width*2+1, width*2]
-        [width, width*2, width*2+1, width*2]
+        [1, width+1, width*2+1, width*2],
+        [width, width*2, width*2+1, width*2],
         [width, width*2, width*2+1, width*2+2]
     ]
 
     const oShape = [
-        [0, 1, width, width+1]
-        [0, 1, width, width+1]
-        [0, 1, width, width+1]
+        [0, 1, width, width+1],
+        [0, 1, width, width+1],
+        [0, 1, width, width+1],
         [0, 1, width, width+1]
     ]
 
     const zShape = [
-        [0, width, width+1, width*2+1]
-        [width+1, width+2, width*2, width*2+1]
-        [0, width, width+1, width*2+1]
+        [0, width, width+1, width*2+1],
+        [width+1, width+2, width*2, width*2+1],
+        [0, width, width+1, width*2+1],
         [width+1, width+2, width*2, width*2+1]
     ]
 
     const tShape = [
-        [1, width,  width+1, width+2]
-        [1, width+1, width+2, width*2+1]
-        [width, width+1, width+2, width*2+1]
+        [1, width,  width+1, width+2],
+        [1, width+1, width+2, width*2+1],
+        [width, width+1, width+2, width*2+1],
         [1,width, width+1, width*2+1]
     ]
 
     const iShape = [
-        [1, width+1, width*2+1, width*3+1]
-        [width, width+1, width+2, width+3]
-        [1, width+1, width*2+1, width*3+1]
+        [1, width+1, width*2+1, width*3+1],
+        [width, width+1, width+2, width+3],
+        [1, width+1, width*2+1, width*3+1],
         [width, width+1, width+2, width+3]
     ]
 
+    //placing all shapes in an array
+    const shapeArray = [lShape, oShape, zShape, tShape, iShape]
 
-    //shape starting position on the board
-    let startPosition = 4
+    //shape starting position on the board and setting shape rotation position
+    let position = 4
+    let rotationPosition = 0
+    
+    //selecting shapes
+    let rand = Math.floor(Math.random()*shapeArray.length)
+    let currentShape = shapeArray[rand][rotationPosition]
 
-    class Shapes {
-        constructor() {
+//render function here
+function draw() {
+    currentShape.forEach(i  => {
+        squares[position + i].classList.add('shape')
+    })
+}
 
-        }
-    }
-
+draw()
 
 })
+
 //set function to store a grid as a data structure for javascript to utilize and call render function anytime the grid state changes
  
 //set function for play again after the board has filled, track grid for filled position above a certain point
@@ -95,6 +105,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //function clear solid line positions and add points to the score
         //2x points for clearing a full tetris
-
-//render function here
 
