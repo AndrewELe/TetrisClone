@@ -2,14 +2,23 @@
 const gameSpeed = 5;
 let currentScore = 0;
 
+
+
 //catching the board elements into javascript by using an eventlistener that does not wait for all elements to be loaded and parsed in the html document
 
 document.addEventListener('DOMContentLoaded', () => {
 
+//SETTING VARIABLES
+
+    //timer for shape movement animation
+    speedOfMovement = 500
+    timer = setInterval(shapeDownBoard, speedOfMovement)
 
     //this seeds the shape grid, allowing to create the 5 different tetris shapes
     const width = 10
 
+
+//CALLING DOM
     //accessing the DOM and connecting all elements to variables for JS processing
     const gameBoard = document.querySelector('.board')
 
@@ -30,7 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     0 11 0
     0 21 0
 
+    also note that the tetris shape MUST by definition be comprised of 4 blacks
     */
+
+//NOTE TO SELF, TURN THESE INTO A CLASS OBJECT
+
     const lShape = [
         [1, width+1, width*2+1, 2],
         [width, width+1, width+2, width*2+2],
@@ -73,19 +86,64 @@ document.addEventListener('DOMContentLoaded', () => {
     //shape starting position on the board and setting shape rotation position
     let position = 4
     let rotationPosition = 0
-    
+
     //selecting shapes
     let rand = Math.floor(Math.random()*shapeArray.length)
     let currentShape = shapeArray[rand][rotationPosition]
 
-//render function here
-function draw() {
-    currentShape.forEach(i  => {
-        squares[position + i].classList.add('shape')
-    })
+//SETTING FUNCTIONS
+
+    //render function here
+    function draw() {
+        currentShape.forEach(i  => {
+            squares[position + i].classList.add('shape')
+        })
 }
 
-draw()
+    //undrawing shape
+    function undraw() {
+        currentShape.forEach(i => {
+            squares[position + i].classList.remove('shape')
+        }) 
+    }
+
+    //moving the shape down the board
+
+    function shapeDownBoard() {
+        undraw()
+        position += width
+        draw() 
+        collisionDetection()
+    } 
+
+    //stopping the shape
+
+    function collisionDetection() {
+        if (currentShape.some(i => squares[position + i + width].classList.contains('endOfBoard'))) {
+            //changing the inner div of the shape to endOfBoard to create the barrier for collision detection
+            currentShape.forEach(i => squares[position + i].classList.add('endOfBoard'))
+
+            //creating new shape to continue game (NOTE TO SELF MAYBE MAKE THIS WHOLE THING A SEPERATE FUNCTION)
+            random = Math.floor(Math.random() * shapeArray.length)
+            currentShape = shapeArray[random][rotationPosition]
+            position = 4    
+            draw()
+        } 
+
+        draw()
+    }
+
+    //moving the shapes
+    function moveLeft() {
+        undraw()
+        const leftEdge = currentShape.some(i => (position + i) % width === 0)
+
+        if(!leftEdge) position -=1
+
+        if(currentShape.some(i => squares[position +i].classList.contains('endOfBoard'))) {
+            position += 1
+        }
+    }
 
 })
 
