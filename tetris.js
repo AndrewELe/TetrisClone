@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //SETTING FUNCTIONS
 
-    //render function here
+    //render shape function
     function draw() {
         currentShape.forEach(i  => {
             squares[position + i].classList.add('shape')
@@ -107,8 +107,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }) 
     }
 
-    //moving the shape down the board
+  //keycodes for the movement of shapes
+  function control(e) {
+    if(e.code === 'ArrowLeft') {
+      moveLeft()
+    } else if (e.code === 'ArrowUp') {
+      //rotate()
+    } else if (e.code === 'ArrowRight') {
+      moveRight()
+    } else if (e.code === 'ArrowDown') {
+      //moveDown()
+    }
+  }
+  document.addEventListener('keyup', control)
 
+
+
+  //moving the shape down the board
     function shapeDownBoard() {
         undraw()
         position += width
@@ -129,23 +144,40 @@ document.addEventListener('DOMContentLoaded', () => {
             position = 4    
             draw()
         } 
-
+        
         draw()
     }
 
     //moving the shapes
     function moveLeft() {
         undraw()
+        //collision detection of side of board, looking ahead if any of the returning value is = 0 than do nothing otherwise if "leftedge is not true" then move the shape -1 position to left
         const leftEdge = currentShape.some(i => (position + i) % width === 0)
 
         if(!leftEdge) position -=1
 
-        if(currentShape.some(i => squares[position +i].classList.contains('endOfBoard'))) {
+        if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
             position += 1
         }
+        draw()
+    }
+
+    function moveRight() {
+        undraw()
+        const rightEdge = currentShape.some(i => (position + i) % width === width - 1)
+    
+        if(!rightEdge) position +=1
+    
+        if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
+            position -= 1
+        }
+        draw()
     }
 
 })
+
+
+
 
 //set function to store a grid as a data structure for javascript to utilize and call render function anytime the grid state changes
  
