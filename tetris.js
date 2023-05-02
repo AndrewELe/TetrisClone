@@ -2,8 +2,6 @@
 const gameSpeed = 5;
 let currentScore = 0;
 
-
-
 //catching the board elements into javascript by using an eventlistener that does not wait for all elements to be loaded and parsed in the html document
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 //SETTING VARIABLES
 
     //timer for shape movement animation
-    speedOfMovement = 500
+    speedOfMovement = 1000
     timer = setInterval(shapeDownBoard, speedOfMovement)
 
     //this seeds the shape grid, allowing to create the 5 different tetris shapes
     const width = 10
-
+    let nextRandom = 0
 
 //CALLING DOM
     //accessing the DOM and connecting all elements to variables for JS processing
@@ -26,10 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let squares = Array.from(document.querySelectorAll('.board div'))
     const ScoreDisplay = document.querySelector('#score')
     const StartBtn = document.querySelector('#play')
-
-    //tracking last score
-
-    //set class for shapes, render them to preview box
 
     //shapes are declared here, each shape has an array and each shape has 4 different positions
     /* 
@@ -48,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         [1, width+1, width*2+1, 2],
         [width, width+1, width+2, width*2+2],
         [1, width+1, width*2+1, width*2],
-        [width, width*2, width*2+1, width*2],
         [width, width*2, width*2+1, width*2+2]
     ]
 
@@ -89,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //selecting shapes
     let rand = Math.floor(Math.random()*shapeArray.length)
+    let currentShapePosition = 0
     let currentShape = shapeArray[rand][rotationPosition]
 
 //SETTING FUNCTIONS
@@ -108,26 +102,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
   //keycodes for the movement of shapes
+    //NOTE TO SELF change functionality for button press and hold
   function control(e) {
     if(e.code === 'ArrowLeft') {
       moveLeft()
-    } else if (e.code === 'ArrowUp') {
-      //rotate()
     } else if (e.code === 'ArrowRight') {
       moveRight()
+    } else if (e.code === 'ArrowUp') {
+      rotate()
     } else if (e.code === 'ArrowDown') {
-      //moveDown()
+      shapeDownBoard()
     }
   }
+
   document.addEventListener('keyup', control)
-
-
 
   //moving the shape down the board
     function shapeDownBoard() {
         undraw()
+        console.log(currentShape)
         position += width
-        draw() 
+        draw()
         collisionDetection()
     } 
 
@@ -139,16 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
             currentShape.forEach(i => squares[position + i].classList.add('endOfBoard'))
 
             //creating new shape to continue game (NOTE TO SELF MAYBE MAKE THIS WHOLE THING A SEPERATE FUNCTION)
-            random = Math.floor(Math.random() * shapeArray.length)
+            //random = nextRand
+            let random = Math.floor(Math.random() * shapeArray.length)
             currentShape = shapeArray[random][rotationPosition]
+            currentShapePosition = shapeArray.indexOf(shapeArray[random])
             position = 4    
             draw()
+            displayNextShape()
         } 
         
         draw()
     }
 
-    //moving the shapes
+    //moving the shapes, move left right and down, up to rotate
+
     function moveLeft() {
         undraw()
         //collision detection of side of board, looking ahead if any of the returning value is = 0 than do nothing otherwise if "leftedge is not true" then move the shape -1 position to left
@@ -174,16 +173,32 @@ document.addEventListener('DOMContentLoaded', () => {
         draw()
     }
 
+    function rotate() {
+        undraw()
+        rotationPosition ++
+        if(rotationPosition === currentShape.length) { 
+          rotationPosition = 0
+        }
+        currentShape = shapeArray[currentShapePosition][rotationPosition]
+        draw()
+      }
+
+//display next shape
+
+      //NEXT SHAPE DOESNT WORK, SCRAP IDEA?
+    const miniGrid = document.querySelectorAll('.upNextGrid div')
+    const miniGridWidth = 4
+    const displayMiddleOfGrid = 0
+
+    function displayNextShape() {
+        
+    }
+
 })
-
-
-
-
 //set function to store a grid as a data structure for javascript to utilize and call render function anytime the grid state changes
  
 //set function for play again after the board has filled, track grid for filled position above a certain point
 
-//button to rotate shape fucntionality (rotation)
 
 //Logic starts here
 
