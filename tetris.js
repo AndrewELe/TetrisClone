@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentShape.forEach(i => squares[position + i].classList.add('endOfBoard'))
 
             //creating new shape to continue game (NOTE TO SELF MAYBE MAKE THIS WHOLE THING A SEPERATE FUNCTION)
-            //random = nextRand
+            
             let random = Math.floor(Math.random() * shapeArray.length)
             currentShape = shapeArray[random][rotationPosition]
             currentShapePosition = shapeArray.indexOf(shapeArray[random])
@@ -195,16 +195,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 })
-//set function to store a grid as a data structure for javascript to utilize and call render function anytime the grid state changes
  
 //set function for play again after the board has filled, track grid for filled position above a certain point
 
 
 //Logic starts here
-
-    //check for location of shape in grid and tracking position of shape
-
-    //collision detection for when shape hits the top of the last placed shape
 
     //function to check for the top of the grid and making player loose
 
