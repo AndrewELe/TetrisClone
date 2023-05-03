@@ -76,14 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
     //placing all shapes in an array
     const shapeArray = [lShape, oShape, zShape, tShape, iShape]
 
-    //shape starting position on the board and setting shape rotation position
+    //shape starting position on the board and setting initial shape rotation position
     let position = 4
     let rotationPosition = 0
 
-    //selecting shapes
+    //selecting shapes for initial shape on load
     let rand = Math.floor(Math.random()*shapeArray.length)
     let currentShapePosition = 0
     let currentShape = shapeArray[rand][rotationPosition]
+
+    console.log(currentShape[rand])
 
 //SETTING FUNCTIONS
 
@@ -120,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //moving the shape down the board
     function shapeDownBoard() {
         undraw()
-        console.log(currentShape)
+        //console.log(currentShape)
         position += width
         draw()
         collisionDetection()
@@ -134,16 +136,18 @@ document.addEventListener('DOMContentLoaded', () => {
             currentShape.forEach(i => squares[position + i].classList.add('endOfBoard'))
 
             //creating new shape to continue game (NOTE TO SELF MAYBE MAKE THIS WHOLE THING A SEPERATE FUNCTION)
+            rand = nextRandom
+            nextRandom = Math.floor(Math.random() * shapeArray.length)
+            currentShape = shapeArray[rand][rotationPosition]
+            currentShapePosition = shapeArray.indexOf(shapeArray[rand])
+            position = rand
             
-            let random = Math.floor(Math.random() * shapeArray.length)
-            currentShape = shapeArray[random][rotationPosition]
-            currentShapePosition = shapeArray.indexOf(shapeArray[random])
-            position = 4    
+            console.log(currentShapePosition)
+            console.log(rand)
+
             draw()
-            displayNextShape()
+            displayShape()
         } 
-        
-        draw()
     }
 
     //moving the shapes, move left right and down, up to rotate
@@ -184,16 +188,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 //display next shape
-
-      //NEXT SHAPE DOESNT WORK, SCRAP IDEA?
     const miniGrid = document.querySelectorAll('.upNextGrid div')
-    const miniGridWidth = 4
-    const displayMiddleOfGrid = 0
+    const displayWidth = 4
+    const displayIndex = 0
 
-    function displayNextShape() {
-        
+    const nextComing = [
+        [1, displayWidth+1, displayWidth*2+1, 2], //lTetromino
+        [0, 1, displayWidth, displayWidth+1],
+        [0, displayWidth, displayWidth+1, displayWidth*2+1], //zTetromino
+        [1, displayWidth, displayWidth+1, displayWidth+2], //tTetromino
+        [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] 
+    ]
+    
+    function displayShape() {
+        miniGrid.forEach(grid => {
+          grid.classList.remove('shape')
+        //  square.style.backgroundColor = ''
+        })
+ 
+        nextComing[nextRandom].forEach( index => {
+          miniGrid[displayIndex + index].classList.add('shape')
+         // miniGrid[displayIndex + index].style.backgroundColor = colors[nextRandom]
+        })
     }
-
 })
  
 //set function for play again after the board has filled, track grid for filled position above a certain point
