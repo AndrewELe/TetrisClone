@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //capturing all the html divs and placng them into an array
     let squares = Array.from(document.querySelectorAll('.board div'))
-    const ScoreDisplay = document.querySelector('#score')
-    const StartBtn = document.querySelector('#play')
+    const scoreDisplay = document.querySelector('#score')
+    const playBtn = document.querySelector('#play')
 
     //shapes are declared here, each shape has an array and each shape has 4 different positions
     /* 
@@ -76,14 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
     //placing all shapes in an array
     const shapeArray = [lShape, oShape, zShape, tShape, iShape]
 
+    //random function
+    const randFunc = () => Math.floor(Math.random()*shapeArray.length)
+
     //shape starting position on the board and setting initial shape rotation position
     let position = 4
     let rotationPosition = 0
 
     //selecting shapes for initial shape on load
-    let rand = Math.floor(Math.random()*shapeArray.length)
-    let currentShapePosition = 0
+    let rand = randFunc()
     let currentShape = shapeArray[rand][rotationPosition]
+
+    // THE SHAPE WILL BE SET TO ZERO ON FIRST ROTATION, FIX THIS
+    let trackingShape = 0
 
     console.log(currentShape[rand])
 
@@ -106,15 +111,15 @@ document.addEventListener('DOMContentLoaded', () => {
   //keycodes for the movement of shapes
     //NOTE TO SELF change functionality for button press and hold
   function control(e) {
-    if(e.code === 'ArrowLeft') {
-      moveLeft()
-    } else if (e.code === 'ArrowRight') {
-      moveRight()
-    } else if (e.code === 'ArrowUp') {
-      rotate()
-    } else if (e.code === 'ArrowDown') {
-      shapeDownBoard()
-    }
+        if(e.code === 'ArrowLeft') {
+        moveLeft()
+        } else if (e.code === 'ArrowRight') {
+        moveRight()
+        } else if (e.code === 'ArrowUp') {
+        rotate()
+        } else if (e.code === 'ArrowDown') {
+        shapeDownBoard()
+        }
   }
 
   document.addEventListener('keyup', control)
@@ -136,13 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
             currentShape.forEach(i => squares[position + i].classList.add('endOfBoard'))
 
             //creating new shape to continue game (NOTE TO SELF MAYBE MAKE THIS WHOLE THING A SEPERATE FUNCTION)
+
             rand = nextRandom
-            nextRandom = Math.floor(Math.random() * shapeArray.length)
+            nextRandom = randFunc()
             currentShape = shapeArray[rand][rotationPosition]
-            currentShapePosition = shapeArray.indexOf(shapeArray[rand])
+            trackingShape = shapeArray.indexOf(shapeArray[rand])
             position = rand
-            
-            console.log(currentShapePosition)
+            console.log(trackingShape)
             console.log(rand)
 
             draw()
@@ -156,9 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw()
         //collision detection of side of board, looking ahead if any of the returning value is = 0 than do nothing otherwise if "leftedge is not true" then move the shape -1 position to left
         const leftEdge = currentShape.some(i => (position + i) % width === 0)
-
-        if(!leftEdge) position -=1
-
+        if(!leftEdge) position -= 0
         if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
             position += 1
         }
@@ -168,9 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveRight() {
         undraw()
         const rightEdge = currentShape.some(i => (position + i) % width === width - 1)
-    
-        if(!rightEdge) position +=1
-    
+        if(!rightEdge) position += 1
         if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
             position -= 1
         }
@@ -183,34 +184,52 @@ document.addEventListener('DOMContentLoaded', () => {
         if(rotationPosition === currentShape.length) { 
           rotationPosition = 0
         }
-        currentShape = shapeArray[currentShapePosition][rotationPosition]
+        currentShape = shapeArray[trackingShape][rotationPosition]
         draw()
       }
 
 //display next shape
+
+    //targeting the minigrid only to display next coming shape
     const miniGrid = document.querySelectorAll('.upNextGrid div')
     const displayWidth = 4
     const displayIndex = 0
 
+    //storing first rotation of shape in seperate array
     const nextComing = [
-        [1, displayWidth+1, displayWidth*2+1, 2], //lTetromino
-        [0, 1, displayWidth, displayWidth+1],
-        [0, displayWidth, displayWidth+1, displayWidth*2+1], //zTetromino
-        [1, displayWidth, displayWidth+1, displayWidth+2], //tTetromino
+        [1, displayWidth+1, displayWidth*2+1, 2], 
+        [0, 1, displayWidth, displayWidth+1], 
+        [0, displayWidth, displayWidth+1, displayWidth*2+1],
+        [1, displayWidth, displayWidth+1, displayWidth+2],
         [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] 
     ]
-    
+
+    // function passingShapeFirstPosition() {
+    //     for (i = 0; i < shapeArray.length; i++) {
+    //         nextComing.push(shapeArray[i][0])
+    //     }
+    // }
+
+    // shapeArray.forEach(passingShapeFirstPosition)
+
+ 
+
     function displayShape() {
         miniGrid.forEach(grid => {
           grid.classList.remove('shape')
-        //  square.style.backgroundColor = ''
         })
  
-        nextComing[nextRandom].forEach( index => {
+        //draws the next shape calling
+        nextComing[nextRandom].forEach(index => {
           miniGrid[displayIndex + index].classList.add('shape')
-         // miniGrid[displayIndex + index].style.backgroundColor = colors[nextRandom]
         })
     }
+
+    //play button functioning
+    // playBtn.addEventListener('click', () => {
+
+    // })
+
 })
  
 //set function for play again after the board has filled, track grid for filled position above a certain point
