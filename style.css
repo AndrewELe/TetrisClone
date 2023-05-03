@@ -1,7 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 6vh;
+}
+
 .container {
     display: flex;
 }
-
 
 .board {
     width: 200px;
