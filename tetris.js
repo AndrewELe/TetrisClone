@@ -3,14 +3,13 @@ const gameSpeed = 5;
 let currentScore = 0;
 
 //catching the board elements into javascript by using an eventlistener that does not wait for all elements to be loaded and parsed in the html document
-
 document.addEventListener('DOMContentLoaded', () => {
 
 //SETTING VARIABLES
 
     //timer for shape movement animation
-    speedOfMovement = 1000
-    timer = setInterval(shapeDownBoard, speedOfMovement)
+    let speedOfMovement = 1000
+    let timer
 
     //this seeds the shape grid, allowing to create the 5 different tetris shapes
     const width = 10
@@ -22,9 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //capturing all the html divs and placng them into an array
     let squares = Array.from(document.querySelectorAll('.board div'))
-    const scoreDisplay = document.querySelector('#score')
+    const score = document.querySelector('#score')
     const playBtn = document.querySelector('#play')
 
+
+    console.log(squares)
     //shapes are declared here, each shape has an array and each shape has 4 different positions
     /* 
     note that the grid position is starting at 0, so for example the blocks that need to be colored for the first L position would correspond to the grid position of 
@@ -37,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     */
 
 //NOTE TO SELF, TURN THESE INTO A CLASS OBJECT
-
     const lShape = [
         [1, width+1, width*2+1, 2],
         [width, width+1, width+2, width*2+2],
@@ -99,9 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentShape.forEach(i  => {
             squares[position + i].classList.add('shape')
         })
+        displayShape()
 }
 
-    //undrawing shape
+    //removing shape from view
     function undraw() {
         currentShape.forEach(i => {
             squares[position + i].classList.remove('shape')
@@ -112,13 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //NOTE TO SELF change functionality for button press and hold
   function control(e) {
         if(e.code === 'ArrowLeft') {
-        moveLeft()
+            timer ? moveLeft() : alert('game paused')
         } else if (e.code === 'ArrowRight') {
-        moveRight()
+            timer ? moveRight() : alert('Game is paused')
         } else if (e.code === 'ArrowUp') {
-        rotate()
+            timer ? rotate() : alert('Game is paused')
         } else if (e.code === 'ArrowDown') {
-        shapeDownBoard()
+            timer ? shapeDownBoard() : alert('Game is paused')
         }
   }
 
@@ -134,34 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
 
     //stopping the shape
-
     function collisionDetection() {
         if (currentShape.some(i => squares[position + i + width].classList.contains('endOfBoard'))) {
             //changing the inner div of the shape to endOfBoard to create the barrier for collision detection
             currentShape.forEach(i => squares[position + i].classList.add('endOfBoard'))
 
             //creating new shape to continue game (NOTE TO SELF MAYBE MAKE THIS WHOLE THING A SEPERATE FUNCTION)
-
             rand = nextRandom
             nextRandom = randFunc()
             currentShape = shapeArray[rand][rotationPosition]
             trackingShape = shapeArray.indexOf(shapeArray[rand])
             position = rand
-            console.log(trackingShape)
-            console.log(rand)
-
             draw()
             displayShape()
         } 
     }
 
     //moving the shapes, move left right and down, up to rotate
-
     function moveLeft() {
         undraw()
         //collision detection of side of board, looking ahead if any of the returning value is = 0 than do nothing otherwise if "leftedge is not true" then move the shape -1 position to left
         const leftEdge = currentShape.some(i => (position + i) % width === 0)
-        if(!leftEdge) position -= 0
+        if(!leftEdge) position -= 1
         if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
             position += 1
         }
@@ -220,15 +215,40 @@ document.addEventListener('DOMContentLoaded', () => {
         })
  
         //draws the next shape calling
-        nextComing[nextRandom].forEach(index => {
+        nextComing[nextRandom].forEach( index => {
           miniGrid[displayIndex + index].classList.add('shape')
         })
     }
 
-    //play button functioning
-    // playBtn.addEventListener('click', () => {
+    //scoring
+    function scoring() {
+        //for loop makes a fake board row thats going to store a copy from a row of the actual board
+        for (let i = 0; i < 199; i += width) {
+            tempRow = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+            
+            if (row.every(i => squares[i].classList.contains('endOfBoard'))) {
+                currentScore += 100
+                score.innerHTML = currentScore
+                
+            }
+        }
 
-    // })
+    }
+
+    //play button functioning
+    playBtn.addEventListener('click', () => {
+        //using falsy value here to check if timer === null
+        if (timer) {
+            clearInterval(timer)
+            timer = null
+        } else {
+            draw()
+            timer = setInterval(shapeDownBoard, speedOfMovement)
+            displayShape()
+        }
+    })
+
+
 
 })
  
