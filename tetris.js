@@ -1,11 +1,27 @@
 //defining global variables here
 
 let currentScore = 0;
+let storedScore = {}
+
+//function to place stored scores in an object
 
 //catching the board elements into javascript by using an eventlistener that does not wait for all elements to be loaded and parsed in the html document
 document.addEventListener('DOMContentLoaded', () => {
 
+    //making replay button hidden on first load
+    const replay = document.getElementById('replay')
+    replay.hidden = true
+
 //SETTING VARIABLES
+
+    //colors array
+    const colors = [
+        'orange',
+        'green',
+        'purple',
+        'red',
+        'blue'
+    ]
 
     //timer for shape movement animation
     let speedOfMovement = 1000
@@ -76,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //placing all shapes in an array
     const shapeArray = [lShape, oShape, zShape, tShape, iShape]
 
-    //random function
+    //random choice generator function for arrays
     const randFunc = () => Math.floor(Math.random()*shapeArray.length)
 
     //shape starting position on the board and setting initial shape rotation position
@@ -98,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function draw() {
         currentShape.forEach(i  => {
             squares[position + i].classList.add('shape')
+            squares[position + i].style.backgroundColor = colors[rand]
         })
         displayShape()
 }
@@ -106,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function undraw() {
         currentShape.forEach(i => {
             squares[position + i].classList.remove('shape')
+            squares[position + i].style.backgroundColor = ''
         }) 
     }
 
@@ -128,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //moving the shape down the board
     function shapeDownBoard() {
         undraw()
-        //console.log(currentShape)
         position += width
         draw()
         collisionDetection()
@@ -234,14 +251,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 tempRow.forEach(i => {
                     squares[i].classList.remove('endOfBoard')
                     squares[i].classList.remove('shape')
+                    squares[i].style.backgroundColor = ''
                 })
                 //storing the removed pieces in a sep array
                 let piecesRem = squares.splice(i, width)
                 //taking that sep array and placeing them ontop of the original grid
                 squares = piecesRem.concat(squares)
                 squares.forEach(cell => gameBoard.appendChild(cell))
-
-
             }
         }
 
@@ -251,18 +267,39 @@ document.addEventListener('DOMContentLoaded', () => {
     function endOfGame() {
         if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
             clearInterval(timer)
+            playBtn.hidden = true
             alert('Game Over!')
-            playBtn.innerHTML = 'Play Again?'
+            replay.hidden = false
+
+            storeNewScore[score]
+
+            console.log(storedScore)
         }
     }
 
-
-
     //clear the board for a new game
+    function clearBoard() {
+        for(let i = 0; i < 199; i++) {
+            squares[i].classList.remove('endOfBoard')
+            squares[i].classList.remove('shape')
+            squares[i].style.backgroundColor = ''
+        }
+    }
+
+    //frequency counter ;) to add and store a new score
+    function storeNewScore(newScore) {
+        for (let i = 0; i < storedScore.length; i++) {
+            storedScore[i] ? storedScore[i] = newScore : storedScore[i+1] = newScore        
+        }
+        currentScore = 0
+    }
+
+//BUTTON FUNCTIONALITY
 
     //play button functioning
     playBtn.addEventListener('click', () => {
         //using falsy value here to check if timer === null
+
         if (timer) {
             clearInterval(timer)
             timer = null
@@ -272,18 +309,16 @@ document.addEventListener('DOMContentLoaded', () => {
             displayShape()
         }
     })
-    
-    
 
-})
- 
-//set function for play again after the board has filled, track grid for filled position above a certain point
-
-
-//Logic starts here
-
-    //function to check for the top of the grid and making player loose
-
+    //replay button functioning
+    replay.addEventListener('click', () => {
+        clearBoard()
+        replay.hidden = true
+        playBtn.hidden = false
+        draw()
+        timer = setInterval(shapeDownBoard, speedOfMovement)
+    })
     //function clear solid line positions and add points to the score
         //2x points for clearing a full tetris
 
+})
