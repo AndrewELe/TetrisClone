@@ -1,5 +1,5 @@
 //defining global variables here
-const gameSpeed = 5;
+
 let currentScore = 0;
 
 //catching the board elements into javascript by using an eventlistener that does not wait for all elements to be loaded and parsed in the html document
@@ -148,6 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
             position = rand
             draw()
             displayShape()
+            scoring()
+            endOfGame()
         } 
     }
 
@@ -207,8 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // shapeArray.forEach(passingShapeFirstPosition)
 
- 
-
     function displayShape() {
         miniGrid.forEach(grid => {
           grid.classList.remove('shape')
@@ -220,20 +220,45 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+
     //scoring
     function scoring() {
         //for loop makes a fake board row thats going to store a copy from a row of the actual board
         for (let i = 0; i < 199; i += width) {
             tempRow = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
             
-            if (row.every(i => squares[i].classList.contains('endOfBoard'))) {
+            if (tempRow.every(i => squares[i].classList.contains('endOfBoard'))) {
                 currentScore += 100
                 score.innerHTML = currentScore
-                
+                //removing the 'endOfBoard' class on squares so that they act as if nothing is inside
+                tempRow.forEach(i => {
+                    squares[i].classList.remove('endOfBoard')
+                    squares[i].classList.remove('shape')
+                })
+                //storing the removed pieces in a sep array
+                let piecesRem = squares.splice(i, width)
+                //taking that sep array and placeing them ontop of the original grid
+                squares = piecesRem.concat(squares)
+                squares.forEach(cell => gameBoard.appendChild(cell))
+
+
             }
         }
 
     }
+
+    //end of game
+    function endOfGame() {
+        if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
+            clearInterval(timer)
+            alert('Game Over!')
+            playBtn.innerHTML = 'Play Again?'
+        }
+    }
+
+
+
+    //clear the board for a new game
 
     //play button functioning
     playBtn.addEventListener('click', () => {
@@ -247,8 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
             displayShape()
         }
     })
-
-
+    
+    
 
 })
  
