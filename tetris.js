@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentShape = shapeArray[rand][rotationPosition]
 
     // THE SHAPE WILL BE SET TO ZERO ON FIRST ROTATION, FIX THIS
-    let trackingShape = 0
+    let trackingShape = rand
 
     console.log(currentShape[rand])
 
@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //render shape function
     function draw() {
+        console.log(currentShape)
+
         currentShape.forEach(i  => {
             squares[position + i].classList.add('shape')
             squares[position + i].style.backgroundColor = colors[rand]
@@ -271,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Game Over!')
             replay.hidden = false
 
-            storeNewScore[score]
+            storeNewScore()
 
             console.log(storedScore)
         }
@@ -287,9 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //frequency counter ;) to add and store a new score
-    function storeNewScore(newScore) {
+    function storeNewScore() {
         for (let i = 0; i < storedScore.length; i++) {
-            storedScore[i] ? storedScore[i] = newScore : storedScore[i+1] = newScore        
+            storedScore[i] ? storedScore[i] = currentScore : storedScore[i+1] = currentScore        
         }
         currentScore = 0
     }
