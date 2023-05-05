@@ -242,7 +242,12 @@ function scoring() {
         if (tempRow.every(i => squares[i].classList.contains('endOfBoard'))) {
             
             //speed up the game
-        
+            if (currentScore > 1000) {
+                speedOfMovement = 500
+            } else if (currentScore > 2000) {
+                speedOfMovement = 250
+            }
+            
             currentScore += 100
             score.innerHTML = currentScore
             //removing the 'endOfBoard' class on squares so that they act as if nothing is inside
