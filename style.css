@@ -1,18 +1,32 @@
 * {
     margin: 0;
     padding: 0;
+    
 }
 
 body {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    padding: 6vh;
+    background: linear-gradient(rgb(201,98,98), rgb(114,84,115));
+    min-height: 100vh;
+}
+
+.title {
+    margin: 30px 0px 30px 0px;
+    font-size: 120px;
+    font-family: 'Geo', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 2px 5px rgb(156,24,16);
 }
 
 .container {
     display: flex;
+}
+
+.button-box {
+    margin: 10px 0px 10px 0px;
 }
 
 .board {
@@ -20,6 +34,7 @@ body {
     height: 400px;
     background-color: black;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
 }
 
@@ -28,9 +43,13 @@ body {
     width: 20px;
 }
 
+.button-box {
+    display: flex;
+
+}
+
 .shape {
     background-color: red;
-    
 }
 
 .upNextGrid {
@@ -39,11 +58,35 @@ body {
     height: 80px;
     display: flex;
     flex-wrap: wrap;
-    background-color: black;
+    align-items: center;
+    background-color: white;
+    opacity: .5;
 }
 
 .upNextGrid div {
     height: 20px;
     width: 20px;
+}
 
+.score-box {
+    display:flex;
+    /* flex-direction: row; */
+
+    width: fit-content;
+    font-size: 15px;
+    font-family: 'Geo', sans-serif;
+    background-color: rgba(255,255,255, .4);
+}
+
+h2 {
+    padding: 0px 10px 0px 0px;
+}
+
+.container-box {
+    border: solid 5px rgb(156,24,16);
+    padding: 60px;
+    background-image: url("https://w0.peakpx.com/wallpaper/576/845/HD-wallpaper-onion-domes-architecture-moscow-red-square-onion-domes-sunset-sky.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
 }

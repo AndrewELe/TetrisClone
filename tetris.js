@@ -34,12 +34,13 @@ CALLING DOM
 //accessing the DOM and connecting all elements to variables for JS processing
 const gameBoard = document.querySelector('.board')
 
-//capturing all the html divs and placng them into an array
+//capturing all the html divs
 let squares = Array.from(document.querySelectorAll('.board div'))
 const score = document.querySelector('#score')
 const playBtn = document.querySelector('#play')
 
 //shapes are declared here, each shape has an array and each shape has 4 different positions
+
 /* 
 note that the grid position is starting at 0, so for example the blocks that need to be colored for the first L position would correspond to the grid position of 
 
@@ -235,29 +236,32 @@ function displayShape() {
 
 //scoring
 function scoring() {
+
+    //speed up the game
+    if (currentScore > 1000) {
+        speedOfMovement = 500
+    } else if (currentScore > 2000) {
+        speedOfMovement = 250
+    }
+
     //for loop makes a fake board row thats going to store a copy from a row of the actual board
     for (let i = 0; i < 199; i += width) {
         tempRow = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
         
         if (tempRow.every(i => squares[i].classList.contains('endOfBoard'))) {
-            
-            //speed up the game
-            if (currentScore > 1000) {
-                speedOfMovement = 500
-            } else if (currentScore > 2000) {
-                speedOfMovement = 250
-            }
-            
             currentScore += 100
             score.innerHTML = currentScore
+
             //removing the 'endOfBoard' class on squares so that they act as if nothing is inside
             tempRow.forEach(i => {
                 squares[i].classList.remove('endOfBoard')
                 squares[i].classList.remove('shape')
                 squares[i].style.backgroundColor = ''
             })
+            
             //storing the removed pieces in a sep array
             let piecesRem = squares.splice(i, width)
+
             //taking that sep array and placeing them ontop of the original grid
             squares = piecesRem.concat(squares)
             squares.forEach(cell => gameBoard.appendChild(cell))
@@ -270,13 +274,13 @@ function scoring() {
 function endOfGame() {
     if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
         clearInterval(timer)
+        
+        //hiding and unhiding buttons
         playBtn.hidden = true
         alert('Game Over!')
         replay.hidden = false
 
         storeNewScore()
-
-        console.log(storedScore)
     }
 }
 
@@ -291,8 +295,7 @@ function clearBoard() {
 
 //score board
 function storeNewScore() {
-    console.log('im here')
-    const playerName = prompt(`Log your name for your score!`)
+    const playerName = prompt(`Log your name with your score!`)
     const playerNameScore = {playerName, currentScore}
     storedScore.push(playerNameScore)
     storedScore.sort((a,b) => b.score - a.score)
@@ -323,5 +326,4 @@ replay.addEventListener('click', () => {
     draw()
     timer = setInterval(shapeDownBoard, speedOfMovement)
 })
-//function clear solid line positions and add points to the score
-    //2x points for clearing a full tetris
+
