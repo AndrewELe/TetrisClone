@@ -36,6 +36,8 @@ body {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    border: 5px solid rgb(140,99,136);
+    border-radius: 10px;
 }
 
 .board div {
@@ -45,8 +47,12 @@ body {
 
 .button-box {
     display: flex;
-
+    position: relative;
+    width: fit-content;
+    left: 260px;
+    top: 410px;
 }
+
 
 .shape {
     background-color: red;
@@ -68,15 +74,6 @@ body {
     width: 20px;
 }
 
-.score-box {
-    display:flex;
-    /* flex-direction: row; */
-
-    width: fit-content;
-    font-size: 15px;
-    font-family: 'Geo', sans-serif;
-    background-color: rgba(255,255,255, .4);
-}
 
 h2 {
     padding: 0px 10px 0px 0px;
@@ -89,4 +86,12 @@ h2 {
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+}
+
+.score-box {
+    display:flex;
+    width: fit-content;
+    font-size: 15px;
+    font-family: 'Geo', sans-serif;
+    background-color: rgba(255,255,255, .4);
 }
