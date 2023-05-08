@@ -13,20 +13,39 @@ body {
 }
 
 .title {
-    margin: 30px 0px 30px 0px;
-    font-size: 120px;
+    margin: 5px 0px 0px;
     font-family: 'Geo', sans-serif;
-    font-weight: bold;
     font-style: italic;
-    text-shadow: 2px 5px rgb(156,24,16);
+    text-shadow: 2px 2px rgb(67, 50, 68); 
+    text-transform: uppercase;
+    background-image: linear-gradient(
+      -225deg,
+      #231557 0%,
+      #44107a 29%,
+      #ff1361 67%,
+      #fff800 100%
+    );
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    /* text-fill-color: transparent; */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 10s linear infinite;
+    display: inline-block;
+    font-size: 140px;
 }
+
+@keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }
 
 .container {
     display: flex;
-}
-
-.button-box {
-    margin: 10px 0px 10px 0px;
 }
 
 .board {
@@ -38,6 +57,8 @@ body {
     flex-wrap: wrap;
     border: 5px solid rgb(140,99,136);
     border-radius: 10px;
+    position: relative;
+    bottom: 40px;
 }
 
 .board div {
@@ -46,13 +67,13 @@ body {
 }
 
 .button-box {
+    margin: 10px 0px 10px 0px;
     display: flex;
     position: relative;
     width: fit-content;
     left: 260px;
-    top: 410px;
+    top: 370px;
 }
-
 
 .shape {
     background-color: red;
@@ -67,13 +88,14 @@ body {
     align-items: center;
     background-color: white;
     opacity: .5;
+    position: relative;
+    top: -30px;
 }
 
 .upNextGrid div {
     height: 20px;
     width: 20px;
 }
-
 
 h2 {
     padding: 0px 10px 0px 0px;
@@ -86,6 +108,8 @@ h2 {
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+    position: relative;
+    
 }
 
 .score-box {
@@ -93,5 +117,31 @@ h2 {
     width: fit-content;
     font-size: 15px;
     font-family: 'Geo', sans-serif;
-    background-color: rgba(255,255,255, .4);
+    background-color: rgba(255,255,255, .7);
+    position: relative;
+    left: 220px;
+    top: 150px;
+}
+
+#play {
+    padding: 5px 8px;
+    font-family: 'Geo', sans-serif;
+    background-color: black;
+    color:#fff;
+    cursor: pointer;
+}
+
+#replay {
+    padding: 5px 8px;
+    font-family: 'Geo', sans-serif;
+    background-color: black;
+    color: #fff;
+    cursor: pointer;
+}
+
+#scoreboard {
+    border: solid 5px rgb(156,24,16);
+    text-align: center;
+    width: 300px;
+    
 }
