@@ -140,8 +140,13 @@ h2 {
 }
 
 #scoreboard {
+    margin: 0;
+    padding: 0;
     border: solid 5px rgb(156,24,16);
     text-align: center;
     width: 300px;
-    
+    position: relative;
+    right: 50vmin;
+    top: 4.5vmin;
+    border-radius: 10px;
 }
