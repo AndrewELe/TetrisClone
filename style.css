@@ -150,3 +150,7 @@ h2 {
     top: 4.5vmin;
     border-radius: 10px;
 }
+
+#scoreboard h2 {
+    font-family: 'Geo', sans-serif;
+}

@@ -31,6 +31,9 @@ let storedScore = []
 CALLING DOM
 */
 
+//accessing scoreboard for later effects
+const scoreBoardContainer = document.querySelector('.scoreBoard')
+
 //accessing the DOM and connecting all elements to variables for JS processing
 const gameBoard = document.querySelector('.board')
 
@@ -280,6 +283,8 @@ function endOfGame() {
         alert('Game Over!')
         replay.hidden = false
 
+        scoreBoardContainer.style.opacity = 1
+
         storeNewScore()
     }
 }
@@ -295,17 +300,23 @@ function clearBoard() {
 
 //score board
 function storeNewScore() {
+    let blockToInsert = document.createElement('div')
     const playerName = prompt(`Log your name with your score!`)
     const playerNameScore = {playerName, currentScore}
     storedScore.push(playerNameScore)
     storedScore.sort((a,b) => b.score - a.score)
     console.log(storedScore)
+    blockToInsert.innerHTML = playerNameScore
+    scoreBoardContainer.appendChild(blockToInsert)
 }
 
 //BUTTON FUNCTIONALITY
 
 //play button functioning
 playBtn.addEventListener('click', () => {
+    
+    scoreBoardContainer.style.opacity = '0.5'
+
     //using falsy value here to check if timer === null
 
     if (timer) {
