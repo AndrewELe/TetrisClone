@@ -15,6 +15,10 @@ const colors = [
     'blue'
 ]
 
+//accessing scoreboard for later effects
+const scoreBoardContainer = document.getElementById('#scoreBoard')
+
+
 //timer for shape movement animation
 let speedOfMovement = 1000
 let timer
@@ -31,8 +35,7 @@ let storedScore = []
 CALLING DOM
 */
 
-//accessing scoreboard for later effects
-const scoreBoardContainer = document.querySelector('.scoreBoard')
+
 
 //accessing the DOM and connecting all elements to variables for JS processing
 const gameBoard = document.querySelector('.board')
@@ -314,9 +317,11 @@ function storeNewScore() {
 
 //play button functioning
 playBtn.addEventListener('click', () => {
-    
-    scoreBoardContainer.style.opacity = '0.5'
+    /*
+    //accessing scoreboard for later effects
+    const scoreBoardContainer = document.getElementById('#scoreBoard')
 
+    */
     //using falsy value here to check if timer === null
 
     if (timer) {

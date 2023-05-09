@@ -131,12 +131,21 @@ h2 {
     cursor: pointer;
 }
 
+#play:hover {
+    background-color: rgb(56, 56, 56);
+}
+
+
 #replay {
     padding: 5px 8px;
     font-family: 'Geo', sans-serif;
     background-color: black;
     color: #fff;
     cursor: pointer;
+}
+
+#replay:hover {
+    background-color: rgb(56, 56, 56);
 }
 
 #scoreboard {
