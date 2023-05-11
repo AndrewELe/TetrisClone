@@ -148,7 +148,7 @@ h2 {
     background-color: rgb(56, 56, 56);
 }
 
-#scoreboard {
+#scoreBoard {
     margin: 0;
     padding: 0;
     border: solid 5px rgb(156,24,16);
@@ -158,8 +158,10 @@ h2 {
     right: 50vmin;
     top: 4.5vmin;
     border-radius: 10px;
+    opacity: 0.5;
+    font-family: 'Geo', sans-serif;
 }
 
 #scoreboard h2 {
-    font-family: 'Geo', sans-serif;
+
 }

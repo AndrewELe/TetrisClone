@@ -16,7 +16,7 @@ const colors = [
 ]
 
 //accessing scoreboard for later effects
-const scoreBoardContainer = document.getElementById('#scoreBoard')
+const scoreBoardContainer = document.getElementById('.scoreBoard')
 
 
 //timer for shape movement animation
@@ -220,14 +220,6 @@ const nextComing = [
     [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] 
 ]
 
-// function passingShapeFirstPosition() {
-//     for (i = 0; i < shapeArray.length; i++) {
-//         nextComing.push(shapeArray[i][0])
-//     }
-// }
-
-// shapeArray.forEach(passingShapeFirstPosition)
-
 function displayShape() {
     miniGrid.forEach(grid => {
         grid.classList.remove('shape')
@@ -286,7 +278,8 @@ function endOfGame() {
         alert('Game Over!')
         replay.hidden = false
 
-        scoreBoardContainer.style.opacity = 1
+
+        //scoreBoardContainer.style.opacity = 1
 
         storeNewScore()
     }
@@ -303,6 +296,8 @@ function clearBoard() {
 
 //score board
 function storeNewScore() {
+
+    console.log('im here')
     let blockToInsert = document.createElement('div')
     const playerName = prompt(`Log your name with your score!`)
     const playerNameScore = {playerName, currentScore}
@@ -315,13 +310,10 @@ function storeNewScore() {
 
 //BUTTON FUNCTIONALITY
 
+console.log(scoreBoardContainer)
 //play button functioning
 playBtn.addEventListener('click', () => {
-    /*
-    //accessing scoreboard for later effects
-    const scoreBoardContainer = document.getElementById('#scoreBoard')
-
-    */
+    
     //using falsy value here to check if timer === null
 
     if (timer) {
