@@ -316,18 +316,20 @@ function storeNewScore() {
     // scoreBoardContainer.appendChild(blockToInsert)
 
     const playerName = prompt(`Log your name with your score!`)
-    const playerNameScore = {playerName, currentScore}
+    const playerNameScore = `Player:${playerName} Score:${currentScore}`
     storedScore.push(playerNameScore)
     storedScore.sort((a,b) => b.score - a.score)
+    let strTest = storedScore.toString()
     console.log(storedScore)
-    
 
 
     //blockToInsert.innerHTML = playerNameScore
-    storedScore.forEach((i) => {
-        addingScore.innerHTML += 
-    })
+    // for (let i = 0; i < storedScore.length; i++) {
+    //     addingScore.innerHTML += `${storedScore[i].key} ${storedScore[i].score}`
+    // }
 
+
+    addingScore.innerHTML = storedScore
     currentScore = 0
 }
 
