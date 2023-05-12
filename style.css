@@ -76,7 +76,7 @@ body {
 }
 
 .shape {
-    background-color: red;
+    background-color: black;
 }
 
 .upNextGrid {
@@ -160,8 +160,4 @@ h2 {
     border-radius: 10px;
     opacity: 0.5;
     font-family: 'Geo', sans-serif;
-}
-
-#scoreboard h2 {
-
 }
