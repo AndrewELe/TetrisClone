@@ -16,7 +16,14 @@ const colors = [
 ]
 
 //accessing scoreboard for later effects
-const scoreBoardContainer = document.getElementById('.scoreBoard')
+
+/* 
+TESTING
+*/
+
+const addingScore = document.querySelector('.storedScores')
+
+// const scoreBoardContainer = document.querySelector('.scoreBoard')
 
 
 //timer for shape movement animation
@@ -294,23 +301,39 @@ function clearBoard() {
     }
 }
 
+const test = document.querySelector("#test")
+test.addEventListener('click', () => storeNewScore())
+
+
 //score board
 function storeNewScore() {
 
     console.log('im here')
+    /*
+    TESTING
     let blockToInsert = document.createElement('div')
+    */
+    // scoreBoardContainer.appendChild(blockToInsert)
+
     const playerName = prompt(`Log your name with your score!`)
     const playerNameScore = {playerName, currentScore}
     storedScore.push(playerNameScore)
     storedScore.sort((a,b) => b.score - a.score)
     console.log(storedScore)
-    blockToInsert.innerHTML = playerNameScore
-    scoreBoardContainer.appendChild(blockToInsert)
+    
+
+
+    //blockToInsert.innerHTML = playerNameScore
+    storedScore.forEach((i) => {
+        addingScore.innerHTML += 
+    })
+
+    currentScore = 0
 }
 
 //BUTTON FUNCTIONALITY
 
-console.log(scoreBoardContainer)
+//console.log(scoreBoardContainer)
 //play button functioning
 playBtn.addEventListener('click', () => {
     
