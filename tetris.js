@@ -270,14 +270,11 @@ function scoring() {
 function endOfGame() {
     if(currentShape.some(i => squares[position + i].classList.contains('endOfBoard'))) {
         clearInterval(timer)
-        
+
         //hiding and unhiding buttons
         playBtn.hidden = true
         alert('Game Over!')
         replay.hidden = false
-
-
-        //scoreBoardContainer.style.opacity = 1
 
         storeNewScore()
     }
@@ -294,25 +291,17 @@ function clearBoard() {
 
 //score board
 function storeNewScore() {
-
     console.log('im here')
     const playerName = prompt(`Log your name with your score!`)
     const playerNameScore = `Player:${playerName} || Score:${currentScore}`
     storedScore.push(playerNameScore)
     storedScore.sort((a,b) => b.score - a.score)
     let scoreDisplay = storedScore.toString().split(',')
-
-
     for (let i=0; i<scoreDisplay.length; i++) {
         scoreDisplay[i] = scoreDisplay[i] + '\n'
     }
-
     scoreDisplay = scoreDisplay.join('')
-
-
-
     addingScore.innerHTML = scoreDisplay
-    currentScore = 0
 }
 
 //BUTTON FUNCTIONALITY
@@ -334,10 +323,13 @@ playBtn.addEventListener('click', () => {
 
 //replay button functioning
 replay.addEventListener('click', () => {
-    clearBoard()
-    replay.hidden = true
-    playBtn.hidden = false
-    draw()
-    timer = setInterval(shapeDownBoard, speedOfMovement)
-})
+        clearBoard()
+        replay.hidden = true
+        playBtn.hidden = false
+        draw()
+        timer = setInterval(shapeDownBoard, speedOfMovement)
+        currentScore = 0
+        score.innerHTML = currentScore
+    }
+)
 
