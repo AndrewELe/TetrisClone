@@ -6,6 +6,6 @@ Tetris is one of the world's most famous one player game. Tetrimino peices (shap
 
 Technologies used in this project included are: CSS, HTML, JavaScript (vanilla)
 
-https://rufioyrael.github.io/Tetris/ to play the project game, make a clone of this project and run it in your browser! use the up down left right arrow
+[https://rufioyrael.github.io/Tetris/](https://rufioyrael.github.io/unti-1-project/) to play the project game, make a clone of this project and run it in your browser! use the up down left right arrow
 
 Future enhancements for this project are to impliment a sudden drop function where a single click of the space bar will drop the piece in its current location to lowest position, also last second slide of the peice when it hits the final position
