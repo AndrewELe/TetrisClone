@@ -1,8 +1,6 @@
 Tetris: Return of the Blocks
 
-![gameimage](https://imgur.com/a/AwQvSO7)
-
-Tetris is one of the world's most famous one player game. Tetrimino peices (shapes comprised of 4 blocks) are randomly generated and the goal is to stack the blocks in a way that a full line can be made. After the line is completed it will be automatically deleted off the grid and the game can continue. The player must avoid reaching the top of the grid by deleting rows.
+![gameimage][(https://imgur.com/a/o2mdyPj)]Tetris is one of the world's most famous one player game. Tetrimino peices (shapes comprised of 4 blocks) are randomly generated and the goal is to stack the blocks in a way that a full line can be made. After the line is completed it will be automatically deleted off the grid and the game can continue. The player must avoid reaching the top of the grid by deleting rows.
 
 Technologies used in this project included are: CSS, HTML, JavaScript (vanilla)
 
